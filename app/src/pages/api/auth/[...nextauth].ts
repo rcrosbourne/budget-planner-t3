@@ -18,10 +18,13 @@ export const authOptions: NextAuthOptions = {
     },
     jwt: {
         encode({token}) {
-            return jwt.sign(token, env.NEXTAUTH_SECRET);
+            if(!env.NEXTAUTH_SECRET) {
+                throw new Error("NEXTAUTH_SECRET is not set");
+            }
+            return jwt.sign(token!, env.NEXTAUTH_SECRET);
         },
         decode({token}) {
-            return jwt.verify(token, env.NEXTAUTH_SECRET) as JWT;
+            return jwt.verify(token!, env.NEXTAUTH_SECRET!) as JWT;
         },
     },
     // Include user.id on session
