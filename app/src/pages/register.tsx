@@ -76,7 +76,7 @@ export default function Register({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    errors.name && <p className="mt-2 text-sm text-rose-600">Name Error</p>
+                                    errors.name?.message && <p className="mt-2 text-sm text-rose-600">{errors.name.message.toString()}</p>
                                 }
                             </div>
                             <div>
@@ -90,7 +90,7 @@ export default function Register({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    errors.email && <p className="mt-2 text-sm text-rose-600">email error</p>
+                                    errors.email?.message && <p className="mt-2 text-sm text-rose-600">{errors.email.message.toString()}</p>
                                 }
                             </div>
 
@@ -106,7 +106,7 @@ export default function Register({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    errors.password && <p className="mt-2 text-sm text-rose-600">password error</p>
+                                    errors.password?.message && <p className="mt-2 text-sm text-rose-600">{errors.password.message.toString()}</p>
                                 }
                             </div>
 
@@ -122,7 +122,7 @@ export default function Register({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    errors.passwordConfirm && <p className="mt-2 text-sm text-rose-600">Password Confirm error</p>
+                                    errors.passwordConfirm?.message && <p className="mt-2 text-sm text-rose-600">{errors.passwordConfirm.message.toString()}</p>
                                 }
                             </div>
                             {createUserMutation.isError && <p className="mt-2 text-sm text-rose-600">{createUserMutation.error.message}</p>}

@@ -70,7 +70,7 @@ export default function Signin({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    errors.email?.message && <p className="text-rose-400">email error</p>
+                                    errors.email?.message && <p className="text-rose-400">{errors.email.message.toString()}</p>
                                 }
                             </div>
 
@@ -87,7 +87,7 @@ export default function Signin({csrfToken}: { csrfToken: string }) {
                                 </div>
                                 {
                                     errors.password?.message &&
-                                    <p className="text-rose-400">{/*errors.password?.message*/}</p>
+                                    <p className="text-rose-400">{errors.password?.message.toString()}</p>
                                 }
                             </div>
                             <div>
