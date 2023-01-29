@@ -21,9 +21,11 @@ export const authOptions: NextAuthOptions = {
             if(!env.NEXTAUTH_SECRET) {
                 throw new Error("NEXTAUTH_SECRET is not set");
             }
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return jwt.sign(token!, env.NEXTAUTH_SECRET);
         },
         decode({token}) {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return jwt.verify(token!, env.NEXTAUTH_SECRET!) as JWT;
         },
     },

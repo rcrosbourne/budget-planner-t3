@@ -87,7 +87,7 @@ export default function Signin({csrfToken}: { csrfToken: string }) {
                                 </div>
                                 {
                                     errors.password?.message &&
-                                    <p className="text-rose-400">password error</p>
+                                    <p className="text-rose-400">{/*errors.password?.message*/}</p>
                                 }
                             </div>
                             <div>
