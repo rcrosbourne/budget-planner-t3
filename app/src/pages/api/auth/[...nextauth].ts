@@ -6,27 +6,27 @@ import jwt from "jsonwebtoken";
 
 import {env} from "../../../env/server.mjs";
 import {prisma} from "../../../server/db";
-import {JWT} from "next-auth/jwt";
+import type {JWT} from "next-auth/jwt";
 import {compare} from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
     pages: {
-     signIn: "/auth/signin",
+        signIn: "/auth/signin",
     },
     session: {
         strategy: "jwt",
     },
     jwt: {
-        async encode({token}) {
-            return jwt.sign(token as {}, env.NEXTAUTH_SECRET!);
+        encode({token}) {
+            return jwt.sign(token, env.NEXTAUTH_SECRET);
         },
-        async decode({token}) {
-            return jwt.verify(token!, env.NEXTAUTH_SECRET!) as JWT;
+        decode({token}) {
+            return jwt.verify(token, env.NEXTAUTH_SECRET) as JWT;
         },
     },
     // Include user.id on session
     callbacks: {
-        session({session, user, token}) {
+        session({session, token}) {
             if (session.user) {
                 session.user.id = token.sub ?? "";
             }
@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
                 password: {label: "Password", type: "password"},
             },
             authorize: async (credentials) => {
-                if(!credentials) {
+                if (!credentials) {
                     return null;
                 }
                 const user = await prisma.user.findUnique({

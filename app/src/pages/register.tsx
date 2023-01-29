@@ -1,12 +1,12 @@
-import {CtxOrReq} from "next-auth/client/_utils";
+import type {CtxOrReq} from "next-auth/client/_utils";
 import {getCsrfToken, signIn, useSession} from "next-auth/react";
 import {api} from "../utils/api";
 import {useRouter} from "next/router";
 import {z} from "zod";
-import {FieldValues, SubmitHandler, useForm} from "react-hook-form";
+import type {FieldValues} from "react-hook-form";
+import { useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useEffect} from "react";
-import {session} from "next-auth/core/routes";
 
 const registerSchema = z.object({
     email: z.string().email({message: 'Please enter a valid email address'}),
@@ -26,16 +26,18 @@ export default function Register({csrfToken}: { csrfToken: string }) {
     });
     useEffect(() => {
         if(session && session.data?.user) {
-            router.push('/');
+            void router.push('/');
         }
-    }, [session]);
+    }, [session, router]);
     const submitHandler = async (data: FieldValues) => {
-
         createUserMutation.mutate({
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             email: data.email,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             password: data.password,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             name: data.name,
-        });
+        } );
         // // sign in user
         const status = await signIn('credentials', {
             email: data.email,
@@ -74,7 +76,6 @@ export default function Register({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    /*@ts-ignore*/
                                     errors.name && <p className="mt-2 text-sm text-rose-600">{errors.name.message}</p>
                                 }
                             </div>
@@ -89,7 +90,6 @@ export default function Register({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    /*@ts-ignore*/
                                     errors.email && <p className="mt-2 text-sm text-rose-600">{errors.email.message}</p>
                                 }
                             </div>
@@ -106,7 +106,6 @@ export default function Register({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    /*@ts-ignore*/
                                     errors.password && <p className="mt-2 text-sm text-rose-600">{errors.password.message}</p>
                                 }
                             </div>
@@ -123,7 +122,6 @@ export default function Register({csrfToken}: { csrfToken: string }) {
                                     />
                                 </div>
                                 {
-                                    /*@ts-ignore*/
                                     errors.passwordConfirm && <p className="mt-2 text-sm text-rose-600">{errors.passwordConfirm.message}</p>
                                 }
                             </div>
